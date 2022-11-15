@@ -9,6 +9,8 @@ namespace UdemyFirstProject
     {
         public List<Question> Questions { get; set; }
 
+        public Player Player;
+
         public Quiz()
         {
             LoadQuestionsFromFile("questions.txt");
@@ -71,5 +73,45 @@ namespace UdemyFirstProject
             }
 
         }
+
+        public void Start()
+        {
+            Player = new Player();
+            Console.WriteLine("Tell me your name");
+            Player.Name = Console.ReadLine();
+            Player.Score = 0;
+            Player.CurrentQuestion = 1;
+
+            for(var i = 1; i<=Questions.Count; i++)
+            {
+                var score = ShowQuestion(Player.CurrentQuestion);
+                Player.Score += score;
+                Player.CurrentQuestion++;
+            }
+            Console.WriteLine("Quiz is finished, your score was: "+ Player.Score);
+        }
+        public int ShowQuestion(int questionCounter)
+        {
+            var currentQuestionToShow = Questions[questionCounter -1];
+            Console.WriteLine("Question: " + currentQuestionToShow.Title);
+            Console.WriteLine("A: " + currentQuestionToShow.AnswerA);
+            Console.WriteLine("B: " + currentQuestionToShow.AnswerB);
+            Console.WriteLine("C: " + currentQuestionToShow.AnswerC);
+            Console.WriteLine("D: " + currentQuestionToShow.AnswerD);
+
+            var userResponse = Console.ReadLine();
+            if(userResponse == currentQuestionToShow.RightAnswer)
+            {
+                return currentQuestionToShow.Score;
+            }
+            Console.WriteLine("Your answer was wrong :(");
+            return 0;
+        }
+
+
+
+
+
     }
+
 }

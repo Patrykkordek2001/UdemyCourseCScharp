@@ -7,6 +7,7 @@ namespace UdemyFirstProject
         static void Main(string[] args)
         {
             var quiz = new Quiz();
+            quiz.Start();
         }
     }
 }
